@@ -1,14 +1,15 @@
-FROM quay.io/ukhomeofficedigital/java7-mvn
+FROM java:8-jre-alpine
+RUN apk --update add openssl bash
 
-RUN yum install -y unzip && yum clean all
+ENV KEYCLOAK_VERSION 1.9.7.Final
 
-RUN adduser app -d /opt/jboss
-USER app
-WORKDIR /opt/jboss
+RUN wget https://downloads.jboss.org/keycloak/${KEYCLOAK_VERSION}/keycloak-proxy-${KEYCLOAK_VERSION}.zip \
+  && unzip keycloak-proxy-*.zip \
+  && mv keycloak-proxy-${KEYCLOAK_VERSION} keycloak-proxy \
+  && rm keycloak-proxy*.zip
 
-ENV VERSION 1.7.0.Final
-RUN curl -o keycloak.zip https://downloads.jboss.org/keycloak/${VERSION}/keycloak-proxy-${VERSION}.zip && unzip keycloak.zip && rm keycloak.zip && mv keycloak-proxy-${VERSION} keycloak-proxy
+EXPOSE 8080
 
 COPY entry-point.sh /entry-point.sh
 ENTRYPOINT ["/entry-point.sh"]
-CMD ["/usr/bin/java", "-jar", "/opt/jboss/keycloak-proxy/bin/launcher.jar", "/opt/jboss/keycloak-proxy/config.json"]
+CMD ["/usr/bin/java", "-jar", "/keycloak-proxy/bin/launcher.jar", "/keycloak-proxy/config.json"]
