@@ -27,6 +27,7 @@ cat <<- EOF > ${PWD}/keycloak-proxy/config.json
   "applications": [
     {
       "base-path": "/",
+      "proxy-address-forwarding": true,
       "adapter-config": {
         "realm": "${REALM}",
         "realm-public-key": "${REALMPUBLICKEY}",
