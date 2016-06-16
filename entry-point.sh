@@ -38,12 +38,7 @@ cat <<- EOF > ${PWD}/keycloak-proxy/config.json
           "secret": "${SECRET}"
         }
       },
-      "constraints": [
-        {
-          "pattern": "${PATTERN}",
-          "authenticate": true
-        }
-      ]
+      "constraints": ${CONSTRAINTS}
     }
   ]
 }

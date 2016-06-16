@@ -1,7 +1,7 @@
 FROM java:8-jre-alpine
 RUN apk --update add openssl bash
 
-ENV KEYCLOAK_VERSION 1.9.7.Final
+ENV KEYCLOAK_VERSION 1.9.8.Final
 
 RUN wget https://downloads.jboss.org/keycloak/${KEYCLOAK_VERSION}/keycloak-proxy-${KEYCLOAK_VERSION}.zip \
   && unzip keycloak-proxy-*.zip \
